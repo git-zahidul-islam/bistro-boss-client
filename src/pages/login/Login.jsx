@@ -10,6 +10,7 @@ const Login = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/";
+    console.log("user login for items",location.state);
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -71,7 +72,8 @@ const Login = () => {
                             <input onBlur={handleValidCaptcha} type="text" name="captcha" placeholder="Type your right captcha" className="input input-bordered" required />
                         </div>
                         <div className="form-control mt-6">
-                            <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
+                        {/* TODO: make disabled */}
+                            <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
                         </div>
                         <small>New here <Link to={'/signup'}>Create an account</Link></small>
                     </form>

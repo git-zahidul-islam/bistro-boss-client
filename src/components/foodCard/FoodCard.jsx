@@ -1,7 +1,52 @@
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import Swal from 'sweetalert2'
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
-const FoodCard = ({items}) => {
-    const { name, price, image, recipe } = items;
+const FoodCard = ({ items }) => {
+    const { name, price, image, recipe, _id } = items;
+    const { user } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const axiosSecure = useAxiosSecure()
+
+
+    const handleCart = (food) => {
+        if (user && user?.email) {
+            // to carted items
+            const cartItem = {
+                menuId: _id,
+                email: user?.email,
+                name,
+                price,
+                image,
+            }
+               axiosSecure.post('/carts',cartItem)
+                .then(result => {
+                    console.log(result.data);
+                })
+                .catch(error => console.error(error))
+        }
+
+        else {
+            Swal.fire({
+                title: "Are you buy?",
+                text: "Buy items please login!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Login!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login', { state: { from: location } })
+                }
+            });
+        }
+
+    }
+
     return (
         <div>
             <div className="card w-96 bg-base-100 shadow-xl">
@@ -10,10 +55,10 @@ const FoodCard = ({items}) => {
                     <h2 className="card-title">{name}</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
                     <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Add to Cart</button>
+                        <button onClick={() => handleCart(items)} className="btn btn-primary">Add to Cart</button>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     );
 };

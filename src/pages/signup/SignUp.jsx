@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 
 
 const SignUp = () => {
-    const { userCreate } = useContext(AuthContext)
+    const { userCreate, userUpdateProfile } = useContext(AuthContext)
     const navigate = useNavigate()
     const {
         register,
@@ -16,11 +16,16 @@ const SignUp = () => {
 
 
     const handleSignUp = (data) => {
+        const name = data?.name
         const email = data?.email
         const password = data?.password
+        const photo = data?.photo
         userCreate(email,password)
         .then(result => {
             console.log(result.user);
+            userUpdateProfile(name,photo)
+            .then(() => console.log("the photo update"))
+            .catch(error => console.error(error))
             navigate('/')
         })
         .catch(error => {
@@ -45,6 +50,13 @@ const SignUp = () => {
                             </label>
                             <input type="text" {...register("name", { required: true })} name="name" placeholder="name" className="input input-bordered"  />
                             {errors.name && <span className="text-red-400">This field is required</span>}
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Photo url</span>
+                            </label>
+                            <input type="text" {...register("photo", { required: true })} name="photo" placeholder="photo url" className="input input-bordered"  />
+                            {errors.photo && <span className="text-red-400">This field is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
