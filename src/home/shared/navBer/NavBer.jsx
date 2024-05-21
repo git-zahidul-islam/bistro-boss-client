@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../provider/AuthProvider";
 import { BsFillCartPlusFill } from "react-icons/bs";
+import useCart from "../../../hooks/useCart";
 
 const NavBer = () => {
     const { logout, user } = useContext(AuthContext)
+    const [cart] = useCart()
 
     const handleLogout = () => {
         logout()
@@ -16,10 +18,10 @@ const NavBer = () => {
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'/menu'}>Our Menu</Link></li>
         <li><Link to={'/order/salad'}>Order Food</Link></li>
-        <li><Link>
+        <li><Link to="/dashboard/cart">
             <button className="flex items-center gap-2">
-               <BsFillCartPlusFill size={20}/>
-                <div className="badge badge-secondary">+0</div>
+                <BsFillCartPlusFill size={20} />
+                <div className="badge badge-secondary">+{cart.length}</div>
             </button>
         </Link></li>
         {
