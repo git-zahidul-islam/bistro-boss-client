@@ -7,20 +7,27 @@ import { useEffect, useState } from "react";
 import { Rating } from '@smastrom/react-rating'
 import '@smastrom/react-rating/style.css'
 import { FcAdvertising } from "react-icons/fc";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 
 
 const Testimonials = () => {
+    const axiosPublic = useAxiosPublic()
     const [review, setReview] = useState([])
     // console.log(review);
 
     useEffect(() => {
-        fetch('http://localhost:5000/reviews')
-            .then(res => res.json())
-            .then(data => {
-                setReview(data)
-            })
-    }, [])
+        // fetch('http://localhost:5000/reviews')
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         setReview(data)
+        //     })
+        axiosPublic.get(`${import.meta.env.VITE_API_COMMON}/reviews`)
+        .then(res => {
+            setReview(res.data)
+        })
+
+    }, [axiosPublic])
 
     return (
         <div className="my-20">

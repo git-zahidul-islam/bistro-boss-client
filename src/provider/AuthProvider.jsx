@@ -19,7 +19,8 @@ const AuthProvider = ({ children }) => {
     }
     const googleLogin = () => {
         setLoading(true)
-        signInWithPopup(googleProvider)
+        return signInWithPopup(auth,googleProvider)
+
     }
     // logout
     const logout = () => {

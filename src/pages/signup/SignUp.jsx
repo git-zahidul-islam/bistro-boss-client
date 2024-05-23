@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from 'sweetalert2'
+import SocialLogin from "../../components/socialLogin/SocialLogin";
 
 const SignUp = () => {
     const axiosPublic = useAxiosPublic()
@@ -99,6 +100,7 @@ const SignUp = () => {
                             <input className="btn btn-primary" type="submit" value="SignUp" />
                         </div>
                     </form>
+                    <SocialLogin></SocialLogin>
                 </div>
             </div>
         </div>

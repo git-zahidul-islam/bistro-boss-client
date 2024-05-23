@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from "../../provider/AuthProvider";
+import SocialLogin from "../../components/socialLogin/SocialLogin";
 
 
 const Login = () => {
@@ -10,7 +11,7 @@ const Login = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/";
-    console.log("user login for items",location.state);
+    // console.log("user login for items",location.state);
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -75,8 +76,12 @@ const Login = () => {
                         {/* TODO: make disabled */}
                             <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
                         </div>
-                        <small>New here <Link to={'/signup'}>Create an account</Link></small>
+                        <small>New here <Link className="text-base font-medium text-indigo-700" to={'/signup'}>Create an account</Link></small>
                     </form>
+                    <div className="divider px-2"></div> 
+                    <div className="flex justify-center">
+                        <SocialLogin></SocialLogin>
+                    </div>
                 </div>
                 <div className="text-center w-1/2 lg:text-left">
                     <input type="submit" className="text-5xl font-bold" value="login" />
