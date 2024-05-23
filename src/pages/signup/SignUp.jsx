@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
-
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from 'sweetalert2'
 
 const SignUp = () => {
+    const axiosPublic = useAxiosPublic()
     const { userCreate, userUpdateProfile } = useContext(AuthContext)
     const navigate = useNavigate()
     const {
@@ -20,17 +22,32 @@ const SignUp = () => {
         const email = data?.email
         const password = data?.password
         const photo = data?.photo
-        userCreate(email,password)
-        .then(result => {
-            console.log(result.user);
-            userUpdateProfile(name,photo)
-            .then(() => console.log("the photo update"))
-            .catch(error => console.error(error))
-            navigate('/')
-        })
-        .catch(error => {
-            console.error(error);
-        })
+        userCreate(email, password)
+            .then(result => {
+                console.log(result.user);
+                userUpdateProfile(name, photo)
+                    .then(() => {
+                        const userInfo = {
+                            name: name,
+                            email: email,
+                        }
+                        axiosPublic.post('/users',userInfo)
+                        .then(res => {
+                            if(res.data.insertedId){
+                                Swal.fire({
+                                    title: "Good job!",
+                                    text: "You clicked the button!",
+                                    icon: "success"
+                                });
+                            }
+                        })
+                    })
+                    .catch(error => console.error(error))
+                navigate('/')
+            })
+            .catch(error => {
+                console.error(error);
+            })
     }
 
 
@@ -48,28 +65,28 @@ const SignUp = () => {
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
-                            <input type="text" {...register("name", { required: true })} name="name" placeholder="name" className="input input-bordered"  />
+                            <input type="text" {...register("name", { required: true })} name="name" placeholder="name" className="input input-bordered" />
                             {errors.name && <span className="text-red-400">This field is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Photo url</span>
                             </label>
-                            <input type="text" {...register("photo", { required: true })} name="photo" placeholder="photo url" className="input input-bordered"  />
+                            <input type="text" {...register("photo", { required: true })} name="photo" placeholder="photo url" className="input input-bordered" />
                             {errors.photo && <span className="text-red-400">This field is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" name="email" {...register("email", { required: true })} placeholder="email" className="input input-bordered"  />
+                            <input type="email" name="email" {...register("email", { required: true })} placeholder="email" className="input input-bordered" />
                             {errors.email && <span className="text-red-400">This field is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" name="password" {...register("password", { required: true, maxLength: 16, minLength: 6, pattern: /(?=.*\d)(?=.*[a-zA-Z])/ })} placeholder="password" className="input input-bordered"  />
+                            <input type="password" name="password" {...register("password", { required: true, maxLength: 16, minLength: 6, pattern: /(?=.*\d)(?=.*[a-zA-Z])/ })} placeholder="password" className="input input-bordered" />
                             <label className="label">
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>

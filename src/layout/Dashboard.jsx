@@ -2,8 +2,10 @@ import { NavLink, Outlet } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
 import { FaBook, FaCalendarAlt, FaReceipt } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
+    const [cart] = useCart()
     return (
         <div className="flex">
             <div className="w-64 bg-orange-400 min-h-screen py-10">
@@ -26,7 +28,7 @@ const Dashboard = () => {
                         <NavLink
                             className='flex items-center gap-2 text-xl ml-5'
                             to={'/dashboard/cart'}>
-                            <FaShoppingCart />My Cart
+                            <FaShoppingCart />My Cart ({cart.length})
                         </NavLink>
                     </li>
                     <li className="p-1">
