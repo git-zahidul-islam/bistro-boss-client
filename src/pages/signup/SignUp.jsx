@@ -37,7 +37,7 @@ const SignUp = () => {
                             if(res.data.insertedId){
                                 Swal.fire({
                                     title: "Good job!",
-                                    text: "You clicked the button!",
+                                    text: "login successfully!",
                                     icon: "success"
                                 });
                             }

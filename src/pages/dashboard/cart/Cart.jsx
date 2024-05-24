@@ -38,10 +38,6 @@ const Cart = () => {
                     .catch(error => console.error(error))
             }
         });
-
-
-
-
     }
 
     return (
@@ -96,9 +92,6 @@ const Cart = () => {
                             }
 
                         </tbody>
-
-
-
                     </table>
                 </div>
             </div>
