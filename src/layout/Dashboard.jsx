@@ -1,14 +1,15 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
-import {  FaBook, FaCalendarAlt, FaContao, FaHamburger, FaList, FaPaypal, FaReceipt, FaUser, FaUserMinus, FaUtensils } from "react-icons/fa";
+import { FaBook, FaCalendarAlt, FaContao, FaHamburger, FaList, FaPaypal, FaReceipt, FaUser, FaUserMinus, FaUtensils } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../hooks/useCart";
+import useAdmin from "../hooks/useAdmin";
 
 
 const Dashboard = () => {
     const [cart] = useCart()
 
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="flex">
@@ -28,28 +29,28 @@ const Dashboard = () => {
                                     <NavLink
                                         className='flex items-center gap-2 text-xl ml-5'
                                         to={'/dashboard/adminItems'}>
-                                        <FaUtensils/>Add Items
+                                        <FaUtensils />Add Items
                                     </NavLink>
                                 </li>
                                 <li className="p-1">
                                     <NavLink
                                         className='flex items-center gap-2 text-xl ml-5'
                                         to={'/dashboard/manageItem'}>
-                                        <FaList/>Management Item
+                                        <FaList />Management Item
                                     </NavLink>
                                 </li>
                                 <li className="p-1">
                                     <NavLink
                                         className='flex items-center gap-2 text-xl ml-5'
                                         to={'/dashboard/manageBooking'}>
-                                        <FaBook/> Manage Booking
+                                        <FaBook /> Manage Booking
                                     </NavLink>
                                 </li>
                                 <li className="p-1">
                                     <NavLink
                                         className='flex items-center gap-2 text-xl ml-5'
                                         to={'/dashboard/users'}>
-                                        <FaUser/>All User
+                                        <FaUser />All User
                                     </NavLink>
                                 </li>
                             </ul>
