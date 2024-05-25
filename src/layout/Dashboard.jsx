@@ -28,7 +28,7 @@ const Dashboard = () => {
                                 <li className="p-1">
                                     <NavLink
                                         className='flex items-center gap-2 text-xl ml-5'
-                                        to={'/dashboard/adminItems'}>
+                                        to={'/dashboard/addItems'}>
                                         <FaUtensils />Add Items
                                     </NavLink>
                                 </li>

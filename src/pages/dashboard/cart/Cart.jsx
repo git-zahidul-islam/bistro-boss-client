@@ -25,7 +25,7 @@ const Cart = () => {
 
                 axiosSecure.delete(`/carts/${id}`)
                     .then((result) => {
-                        if (result.data.deletedCount > 0){
+                        if (result.data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your file has been deleted.",
@@ -33,7 +33,7 @@ const Cart = () => {
                             });
                             refetch()
                         }
-                        console.log("delete successfully",result.data);
+                        console.log("delete successfully", result.data);
                     })
                     .catch(error => console.error(error))
             }
@@ -86,7 +86,8 @@ const Cart = () => {
                                     <th>
                                         <button
                                             onClick={() => handleDelete(item._id)}
-                                            className="text-red-600"><RiDeleteBin2Fill size={28} /></button>
+                                            className="text-red-600"><RiDeleteBin2Fill size={28} />
+                                        </button>
                                     </th>
                                 </tr>)
                             }

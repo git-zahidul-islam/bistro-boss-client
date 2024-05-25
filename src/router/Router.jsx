@@ -12,11 +12,17 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../layout/Dashboard";
 import Cart from "../pages/dashboard/cart/Cart";
 import User from "../pages/dashboard/user/User";
+import AddItems from "../pages/dashboard/addItems/AddItems";
+import ErrorPage from "../pages/error/ErrorPage";
+import AdminRoute from "./AdminRoute";
+import ManageItems from "../pages/dashboard/manageItems/ManageItems";
+import UpdateItems from "../pages/dashboard/updateItems/UpdateItems";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Root></Root>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -53,12 +59,23 @@ export const router = createBrowserRouter([
                 path: 'cart',
                 element: <Cart></Cart>
             },
-
             // admin routes
-            
+            {
+                path: 'addItems',
+                element: <AdminRoute><AddItems></AddItems></AdminRoute>
+            },
+            {
+                path: 'manageItem',
+                element: <AdminRoute><ManageItems></ManageItems></AdminRoute>
+            },
+            {
+                path: 'updateItems/:id',
+                element: <AdminRoute><UpdateItems></UpdateItems></AdminRoute>,
+                loader: ({params}) => fetch(`${import.meta.env.VITE_API_COMMON}/menu/${params.id}`)
+            },
             {
                 path: 'users',
-                element: <User></User>
+                element: <AdminRoute><User></User></AdminRoute>
             }
 
         ]

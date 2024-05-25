@@ -1,19 +1,32 @@
-import { useEffect, useState } from "react"
+// import { useEffect, useState } from "react"
+
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../useAxiosPublic";
 
 const useMenu = () => {
-    const [menu, setMenu] = useState([])
-    const [loading,setLoading] = useState(true)
+    const axiosPublic = useAxiosPublic()
+    // const [menu, setMenu] = useState([])
+    // const [loading,setLoading] = useState(true)
+    // useEffect(() => {
+    //     fetch(`${import.meta.env.VITE_API_COMMON}/menu`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setMenu(data)
+    //             setLoading(false)
+    //         })
+    // }, [])
 
-    useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_COMMON}/menu`)
-            .then(res => res.json())
-            .then(data => {
-                setMenu(data)
-                setLoading(false)
-            })
-    }, [])
+    const { data: menu = [], isPending: loading,refetch } = useQuery({
+        queryKey: ['menu'],
+        queryFn: async () => {
+            const res = await axiosPublic('/menu')
+            return res.data;
+        }
+    })
 
-    return [menu,loading]
+
+
+    return [menu,loading,refetch]
 }
 
 export default useMenu;
