@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
 import { RiDeleteBin2Fill } from "react-icons/ri";
@@ -45,7 +46,11 @@ const Cart = () => {
             <div className="flex justify-between bg-orange-200 p-1">
                 <h1 className="text-3xl">Total items: {cart.length}</h1>
                 <h1 className="text-3xl">Total Price: {price}</h1>
-                <h1 className="text-3xl">Pay</h1>
+
+                {cart.length ?
+                    <Link to={`/dashboard/payments`}><button className="text-3xl btn btn-primary">Pay</button></Link> :
+                    <button disabled={!cart.length} className="text-3xl btn btn-primary">Pay</button>
+                }
             </div>
             <div>
                 <div className="overflow-x-auto">
